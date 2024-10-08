@@ -48,4 +48,18 @@ public class PileRPL {
         }
 
     }
+
+    public void soustraction(){
+        ObjetEmpilable prem = objets.getLast();
+        objets.removeLast();
+        ObjetEmpilable sec = objets.getLast();
+        objets.removeLast();
+        pointeurHautDePile -= 1;
+        try {
+            objets.add(prem.soustraction(sec));
+        } catch (Exception e) {
+            System.out.println("ça devrait pas arriver");
+        }
+
+    }
 }
