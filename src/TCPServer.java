@@ -35,14 +35,19 @@ class Service extends Thread {
 		int compteur = 0;
 
 		try {
-			while( !(texte = entree.readLine()).equals("xxxxxx"))
-				compteur += (new StringTokenizer( texte, " ,.;:_-+*/\\.;\"'{}()=><\t!\n")).countTokens();
-			sortie.println( "votre texte poss�de " + compteur + " mots" );
+			//while( !(texte = entree.readLine()).equals("xxxxxx"))
+				//compteur += (new StringTokenizer( texte, " ,.;:_-+*/\\.;\"'{}()=><\t!\n")).countTokens();
+			//sortie.println( "votre texte poss�de " + compteur + " mots" );
+			CalcOnline calc = new CalcOnline(entree, sortie);
+			calc.run();
+
 			socket.close();
 		} catch( IOException e ) {
 			System.out.println( "probl�me dans run" );
-		}
-	}
+		} catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 }

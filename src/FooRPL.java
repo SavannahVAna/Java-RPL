@@ -1,5 +1,7 @@
+import java.io.IOException;
+
 public class FooRPL {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         CalcRPLImproved rpi = new CalcRPLImproved();
         try {
             rpi.run();

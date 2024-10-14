@@ -1,17 +1,20 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 //does not yet support vectorial calculation
-public class CalcRPLImproved {
+public class LogParser {
     Scanner sc;
     String[] input;
     PileRPL pile;
     boolean use = true;
-    LogWriter logWriter;
+    BufferedReader br;
 
-    public CalcRPLImproved() throws IOException {
+    public LogParser(String filePath) throws IOException {
         sc = new Scanner(System.in);
         pile = new PileRPL();
-        this.logWriter = new LogWriter("log.txt");
+        br = new BufferedReader(new FileReader(filePath));
+
     }
 
     private boolean checkInt(String in) {
@@ -24,7 +27,7 @@ public class CalcRPLImproved {
 
     private void queryInput() throws IOException {
         String in = sc.nextLine();
-        logWriter.log(in);
+
         input = in.split(" ");
     }
 

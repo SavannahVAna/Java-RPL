@@ -1,17 +1,23 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.Scanner;
 //does not yet support vectorial calculation
-public class CalcRPLImproved {
+public class CalcOnline {
     Scanner sc;
     String[] input;
     PileRPL pile;
     boolean use = true;
+    PrintStream out;
     LogWriter logWriter;
 
-    public CalcRPLImproved() throws IOException {
-        sc = new Scanner(System.in);
+
+    public CalcOnline(BufferedReader in, PrintStream out) throws IOException {
+        sc = new Scanner(in);
         pile = new PileRPL();
-        this.logWriter = new LogWriter("log.txt");
+        this.out = out;
+        logWriter = new LogWriter("log.txt");
     }
 
     private boolean checkInt(String in) {
@@ -30,10 +36,10 @@ public class CalcRPLImproved {
 
     public void run() throws Exception {
         while (use) {
-            System.out.println("Please enter your calculation, q to quit");
+            out.println("Please enter your calculation, q to quit");
             queryInput();
             handleOperation();
-            System.out.println(pile.toString());
+            out.println(pile.toString());
         }
     }
 
