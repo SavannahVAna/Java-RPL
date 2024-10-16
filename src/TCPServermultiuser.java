@@ -1,14 +1,18 @@
-import java.net.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 
-class Service extends Thread {
+class Service2 extends Thread {
 
 
 	Socket socket;
 
 
-	public Service( Socket socket ) {
+	public Service2(Socket socket ) {
 		this.socket = socket;
 		this.start();
 	}
@@ -17,16 +21,6 @@ class Service extends Thread {
 	public void run() {
 		BufferedReader entree = null;
 		PrintStream sortie = null;
-		try {
-			entree = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
-			sortie = new PrintStream( socket.getOutputStream() );
-		} catch( IOException e ) {
-			try {
-				socket.close();
-			} catch( IOException e2 ) {
-				System.out.println( "probl�me en fermant socket" );
-			}
-		}
 
 		String texte;
 		int compteur = 0;
@@ -35,8 +29,8 @@ class Service extends Thread {
 			//while( !(texte = entree.readLine()).equals("xxxxxx"))
 				//compteur += (new StringTokenizer( texte, " ,.;:_-+*/\\.;\"'{}()=><\t!\n")).countTokens();
 			//sortie.println( "votre texte poss�de " + compteur + " mots" );
-			CalcOnline calc = new CalcOnline(entree, sortie);
-			calc.run();
+			CalcOnlineMulti calc = new CalcOnlineMulti(socket);
+			calc.start();
 
 			socket.close();
 		} catch( IOException e ) {
@@ -52,7 +46,7 @@ class Service extends Thread {
 
 
 
-public class TCPServer {
+public class TCPServermultiuser {
 
 
 	public static void main( String[] args ) {
