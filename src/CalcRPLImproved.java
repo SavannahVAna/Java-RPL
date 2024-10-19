@@ -7,11 +7,13 @@ public class CalcRPLImproved {
     PileRPL pile;
     boolean use = true;
     LogWriter logWriter;
+    boolean write;
 
-    public CalcRPLImproved() throws IOException {
+    public CalcRPLImproved(boolean write) throws IOException {
         sc = new Scanner(System.in);
         pile = new PileRPL();
         this.logWriter = new LogWriter("log.txt");
+        this.write = write;
     }
 
     private boolean checkInt(String in) {
@@ -24,7 +26,8 @@ public class CalcRPLImproved {
 
     private void queryInput() throws IOException {
         String in = sc.nextLine();
-        logWriter.log(in);
+        if (write){
+            logWriter.log(in);}
         input = in.split(" ");
     }
 
@@ -67,6 +70,7 @@ public class CalcRPLImproved {
             }
             else if (str.equals("q")) {
                 use = false;
+                logWriter.close();
             }
         }
     }

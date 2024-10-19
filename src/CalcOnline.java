@@ -10,14 +10,14 @@ public class CalcOnline {
     PileRPL pile;
     boolean use = true;
     PrintStream out;
-    LogWriter logWriter;
+    //LogWriter logWriter;
 
 
     public CalcOnline(BufferedReader in, PrintStream out) throws IOException {
         sc = new Scanner(in);
         pile = new PileRPL();
         this.out = out;
-        logWriter = new LogWriter("log.txt");
+        //logWriter = new LogWriter("log.txt");
     }
 
     private boolean checkInt(String in) {
@@ -30,7 +30,7 @@ public class CalcOnline {
 
     private void queryInput() throws IOException {
         String in = sc.nextLine();
-        logWriter.log(in);
+        //logWriter.log(in);
         input = in.split(" ");
     }
 

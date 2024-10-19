@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class CalcRemote {
+public class CalcRemote2 {
     Socket _socket = null; // socket representing connecton to remote machine
     PrintWriter _send = null; // write to this to send data to remote server
     BufferedReader _receive = null;
@@ -46,7 +46,7 @@ public class CalcRemote {
         //tcp server client
     }
     public void run(){
-        CalcRemote calcRemote = new CalcRemote();
+        CalcRemote2 calcRemote = new CalcRemote2();
         calcRemote.init();
     }
 }

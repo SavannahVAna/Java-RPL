@@ -58,7 +58,7 @@ class Service extends Thread {
 public class TCPServer {
 
 
-	public static void main( String[] args ) {
+	public void run() {
 		int port = 12345;
 		ServerSocket receptionniste;
 		Socket socket;
