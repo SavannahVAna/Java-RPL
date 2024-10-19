@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -9,6 +6,7 @@ public class CalcRemote {
     Socket _socket = null; // socket representing connecton to remote machine
     PrintWriter _send = null; // write to this to send data to remote server
     BufferedReader _receive = null;
+    InputStream in = System.in;
     public void init() {
         int remoteSocketNumber = 12345;
         try {
@@ -32,7 +30,7 @@ public class CalcRemote {
                 }).start();
 
                 // Read messages from the console and send to the server
-                Scanner scanner = new Scanner(System.in);
+                Scanner scanner = new Scanner(in);
                 String userInput;
                 while (true) {
                     userInput = scanner.nextLine();
