@@ -66,7 +66,7 @@ public class TCPServer {
 				System.out.println( "waiting..." );
 				socket = receptionniste.accept();
 				System.out.println( "connexion!" );
-				new Service2( socket );
+				new Service( socket );
 			}
 		} catch( IOException e ) {
 			System.out.println( "probleme de connexion" );

@@ -54,7 +54,7 @@ public class FooRPL {
 
                     }
                 }
-                else if (args[0].equals("-user=remote")) {
+                else if (args[0].equals("-user=local")) {
                     if(args[1].equals("log=rec")) {
 
                     }
