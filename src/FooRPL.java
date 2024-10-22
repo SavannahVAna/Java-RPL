@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 public class FooRPL {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         if (args.length == 0) {
             CalcRPLImproved rpi = new CalcRPLImproved(false);
             try {
@@ -40,6 +40,8 @@ public class FooRPL {
                         break;
                     case "-log=replay":
                         //TODO replay log
+                        LogParser log = new LogParser("log.txt");
+                        log.run();
                         break;
 
                 }

@@ -4,17 +4,17 @@ import java.io.IOException;
 import java.util.Scanner;
 //does not yet support vectorial calculation
 public class LogParser {
-    Scanner sc;
+    //Scanner sc;
     String[] input;
     PileRPL pile;
     boolean use = true;
     BufferedReader br;
 
     public LogParser(String filePath) throws IOException {
-        sc = new Scanner(System.in);
+        //sc = new Scanner(System.in);
         pile = new PileRPL();
         br = new BufferedReader(new FileReader(filePath));
-
+        br.readLine();
     }
 
     private boolean checkInt(String in) {
@@ -26,9 +26,19 @@ public class LogParser {
     }
 
     private void queryInput() throws IOException {
-        String in = sc.nextLine();
+        String in = br.readLine();
+        if (in.equals("---")) {
+            emptyPile();
+            System.out.println("Nouvelle entrée");
+        }
+        else {
+            System.out.println(in);
+            input = in.split(" ");
+        }
+    }
 
-        input = in.split(" ");
+    private void emptyPile(){
+        pile = new PileRPL();
     }
 
     public void run() throws Exception {
