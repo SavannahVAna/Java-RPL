@@ -17,7 +17,7 @@ public class FooRPL {
                     case "-user=remote":
                         CalcRemote rpi = new CalcRemote();
                         try {
-                            rpi.run();
+                            rpi.run(false);
                         } catch (Exception e){
                             System.out.println("une erreur s'est produite");
                         }
@@ -39,7 +39,7 @@ public class FooRPL {
                         }
                         break;
                     case "-log=replay":
-                        //TODO replay log
+
                         LogParser log = new LogParser("log.txt");
                         log.run();
                         break;
@@ -49,18 +49,35 @@ public class FooRPL {
             }
             else if (args.length == 2) {
                 if (args[0].equals("-user=remote")) {
-                    if(args[1].equals("log=rec")) {
-
+                    if(args[1].equals("-log=rec")) {
+                        CalcRemote rpi = new CalcRemote();
+                        try {
+                            rpi.run(true);
+                        } catch (Exception e){
+                            System.out.println("une erreur s'est produite");
+                        }
                     }
-                    else if(args[1].equals("log=replay")) {
-
+                    else if(args[1].equals("-log=replay")) {
+                        LogParsserOnline lg = new LogParsserOnline();
+                        try {
+                            lg.run();
+                        } catch (Exception e){
+                            System.out.println("une erreur s'est produite");
+                        }
                     }
                 }
                 else if (args[0].equals("-user=local")) {
-                    if(args[1].equals("log=rec")) {
-
+                    if(args[1].equals("-log=rec")) {
+                        CalcRPLImproved rp1 = new CalcRPLImproved(true);
+                        try {
+                            rp1.run();
+                        } catch (Exception e){
+                            System.out.println("une erreur s'est produite");
+                        }
                     }
-                    else if(args[1].equals("log=replay")) {
+                    else if(args[1].equals("-log=replay")) {
+                        LogParser log = new LogParser("log.txt");
+                        log.run();
 
                     }
                 }

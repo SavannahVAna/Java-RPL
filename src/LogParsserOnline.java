@@ -2,14 +2,14 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class CalcRemote {
+public class LogParsserOnline {
     Socket _socket = null; // socket representing connecton to remote machine
     PrintWriter _send = null; // write to this to send data to remote server
     BufferedReader _receive = null;
     InputStream in = System.in;
-    public void init(boolean wr) throws IOException {
+    public void init() throws IOException {
         int remoteSocketNumber = 12345;
-        LogWriter logWriter = new LogWriter("log.txt");
+
         try {
             _socket = new Socket("127.0.0.1", remoteSocketNumber);
         } catch (IOException e) {
@@ -31,14 +31,15 @@ public class CalcRemote {
                 }).start();
 
                 // Read messages from the console and send to the server
-                Scanner scanner = new Scanner(in);
+                //Scanner scanner = new Scanner(in);
                 String userInput;
-                while (true) {
-                    userInput = scanner.nextLine();
-                    if(wr){
-                        logWriter.log(userInput);
+                BufferedReader br  = new BufferedReader(new FileReader("log.txt"));
+                br.readLine();
+                while ((userInput = br.readLine()) != null) {
+                    if (userInput.equals("---")){
+                        break;
                     }
-                    _send.println(userInput);
+                    _send.println(userInput);  // Envoie chaque ligne lue dans le fichier
                 }
 
             } catch (IOException e) {
@@ -47,8 +48,8 @@ public class CalcRemote {
         }
         //tcp server client
     }
-    public void run(boolean wr) throws IOException {
-        CalcRemote calcRemote = new CalcRemote();
-        calcRemote.init(wr);
+    public void run() throws IOException {
+        LogParsserOnline calcRemote = new LogParsserOnline();
+        calcRemote.init();
     }
 }
