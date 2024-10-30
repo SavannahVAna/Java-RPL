@@ -73,6 +73,11 @@ public class CalcOnline {
             }
             else if (str.equals("q")) {
                 use = false;
+            } else if (str.equals("/")) {
+                pile.division();
+            }
+            else if (str.equals("*")) {
+                pile.multiplication();
             }
         }
     }

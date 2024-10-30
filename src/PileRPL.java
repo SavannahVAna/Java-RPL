@@ -62,4 +62,30 @@ public class PileRPL {
         }
 
     }
+
+    public void multiplication(){
+        ObjetEmpilable prem = objets.getLast();
+        objets.removeLast();
+        ObjetEmpilable sec = objets.getLast();
+        objets.removeLast();
+        pointeurHautDePile -= 1;
+        try {
+            objets.add(prem.multiplication(sec));
+        } catch (Exception e) {
+            System.out.println("ça devrait pas arriver");
+        }
+    }
+
+    public void division(){
+        ObjetEmpilable prem = objets.getLast();
+        objets.removeLast();
+        ObjetEmpilable sec = objets.getLast();
+        objets.removeLast();
+        pointeurHautDePile -= 1;
+        try {
+            objets.add(prem.division(sec));
+        } catch (Exception e) {
+            System.out.println("ça devrait pas arriver");
+        }
+    }
 }

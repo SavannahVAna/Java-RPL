@@ -71,6 +71,11 @@ public class CalcRPLImproved {
             else if (str.equals("q")) {
                 use = false;
                 logWriter.close();
+            } else if (str.equals("/")) {
+                pile.division();
+            }
+            else if (str.equals("*")) {
+                pile.multiplication();
             }
         }
     }

@@ -75,6 +75,11 @@ public class CalcOnlineStatic implements Runnable {
                     pile.soustraction();
                 } else if (str.equals("q")) {
                     use = false;
+                } else if (str.equals("/")) {
+                    pile.division();
+                }
+                else if (str.equals("*")) {
+                    pile.multiplication();
                 }
             } finally {
                 pileLock.unlock();  // Libérer le lock après l'opération
