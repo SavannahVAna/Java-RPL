@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.util.Scanner;
-//does not yet support vectorial calculation
+//classe de base pour la calculette en solo, supporte la création de logs grace au boolean write passé a la construction (true pour logger)
 public class CalcRPLImproved {
     Scanner sc;
     String[] input;

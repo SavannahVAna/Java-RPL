@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
-//does not yet support vectorial calculation
+//classe pour le replay de logs en local, se comporte comme la calculette mais prends son input dans le fichier passé a sa construction
 public class LogParser {
     //Scanner sc;
     String[] input;

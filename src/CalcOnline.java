@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
-//does not yet support vectorial calculation
+
 public class CalcOnline {
     Scanner sc;
     String[] input;
@@ -12,7 +12,7 @@ public class CalcOnline {
     PrintStream out;
     //LogWriter logWriter;
 
-
+//calconline est la classe lancée par le server en mode pile individuelle
     public CalcOnline(BufferedReader in, PrintStream out) throws IOException {
         sc = new Scanner(in);
         pile = new PileRPL();

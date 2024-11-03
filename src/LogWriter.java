@@ -1,5 +1,5 @@
 import java.io.*;
-
+//classe utilisée pour le logging, écrit les logs dans un fichier et sépare les différentes sessions enregistrées par ---
 public class LogWriter {
     private BufferedWriter writer;
 

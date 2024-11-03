@@ -1,7 +1,7 @@
 import java.net.*;
 import java.io.*;
 
-
+//server pour lancer calconline, la classe qui va servir a calculer et ensuite envoyer le resultat au client
 class Service extends Thread {
 
 

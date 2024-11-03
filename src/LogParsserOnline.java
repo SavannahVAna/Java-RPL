@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
-
+//comme la classe calcremote mais prends son input dans un fichier de logs afin de les rejouer tout en étant connecté au server
 public class LogParsserOnline {
     Socket _socket = null; // socket representing connecton to remote machine
     PrintWriter _send = null; // write to this to send data to remote server

@@ -3,7 +3,7 @@ import java.net.*;
 import java.util.Scanner;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
+//calconlinestatic est la classe pour une pile partagée. Elle comprend la partie calcul et la partie server combinée
 public class CalcOnlineStatic implements Runnable {
     private static PileRPL pile;  // Pile partagée par tous les utilisateurs
     private static Lock pileLock = new ReentrantLock();  // Lock pour synchroniser l'accès à la pile
@@ -22,7 +22,7 @@ public class CalcOnlineStatic implements Runnable {
     }
 
     private boolean checkInt(String in) {
-        return in.matches("\\d+");  // Modifié pour accepter des entiers
+        return in.matches("\\d+");
     }
 
     private boolean checkVector(String in) {

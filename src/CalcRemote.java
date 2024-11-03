@@ -1,7 +1,8 @@
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
-
+//cette classe sert a se connecter au server dans le cas d'un utilisateur remote
+//on peut egalement logger avec cett classe
 public class CalcRemote {
     Socket _socket = null; // socket representing connecton to remote machine
     PrintWriter _send = null; // write to this to send data to remote server

@@ -1,6 +1,6 @@
 import javax.smartcardio.Card;
 import java.util.ArrayList;
-//TODO paramètre de taille + afficher toute la liste
+
 public class PileRPL {
     // empiler des objets, dépiler des objets, gérer plusieurs types d'objet
     //notion de dimension

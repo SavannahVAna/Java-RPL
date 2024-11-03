@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-public class ServerCalcRPL {
+public class ServerCalcRPL {//main du server de calcul, lance le bon mode en fonction de l'argument passé
     public static void main(String[] args) throws IOException {
         if (args.length ==0) {
             CalcOnlineStatic calcServer = new CalcOnlineStatic();

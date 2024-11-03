@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-public class FooRPL {
+public class FooRPL {//comme demandé la classe main va juste lancer la classe qui convient en fonction des arguments passés
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
             CalcRPLImproved rpi = new CalcRPLImproved(false);

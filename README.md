@@ -6,6 +6,7 @@ The version of java used is openjdk-23
 
 ## usage :
 
+utilisez la comme votre calculette pile RPL. Pour traiter des n tuples de nombres, séparez les d'une virgule (ex: *4,5 8,9 +* additionne les deux tuples de nombres et retourne [12,14])
 ### server
 
 pour lancer le server en mode multi user 
