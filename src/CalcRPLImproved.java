@@ -1,4 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.Arrays;
 import java.util.Scanner;
 //classe de base pour la calculette en solo, supporte la création de logs grace au boolean write passé a la construction (true pour logger)
@@ -9,15 +14,56 @@ public class CalcRPLImproved {
     boolean use = true;
     LogWriter logWriter;
     boolean write;
+    boolean remote;
+    ServerSocket serverSocket;
+    Socket socket;
+    PrintStream out;
+    boolean replay;
 
-    public CalcRPLImproved(boolean write) throws IOException {
-        sc = new Scanner(System.in);
+    public CalcRPLImproved(boolean write, boolean rm, boolean replay) throws IOException {
+        serverSocket = new ServerSocket(12345);
+        this.replay = replay;
+        this.remote = rm;
+        if(remote){
+            System.out.println("listening for connection");
+            socket = serverSocket.accept();
+            sc = new Scanner(socket.getInputStream());
+            out = new PrintStream(socket.getOutputStream());
+        }
+        else {
+            sc = new Scanner(System.in);
+            out = System.out;
+        }
+
         pile = new PileRPL();
         if (write) {
             this.logWriter = new LogWriter("log.txt");
         }
+        if (replay){
+            sc = new Scanner(new FileReader("log.txt"));
+            //sc.useDelimiter("\n");
+            sc.nextLine();
+        }
 
         this.write = write;
+    }
+
+    private void changeMode() throws IOException {
+        if (!replay) {
+            remote = !remote;
+            if (remote) {
+                System.out.println("listening for connection");
+                socket = serverSocket.accept();
+                sc = new Scanner(socket.getInputStream());
+                out = new PrintStream(socket.getOutputStream());
+            }
+            if (!remote) {
+                socket.close();  // Fermer la connexion au serveur
+                System.out.println("Disconnected from remote server, switched to command line mode.");
+                sc = new Scanner(System.in);
+                out = System.out;
+            }
+        }
     }
 
     private boolean checkInt(String in) {
@@ -30,6 +76,7 @@ public class CalcRPLImproved {
 
     private void queryInput() throws IOException {
         String in = sc.nextLine();
+        System.out.println(in);
         if (write){
             logWriter.log(in);}
         input = in.split(" ");
@@ -37,7 +84,7 @@ public class CalcRPLImproved {
 
     public void run() throws Exception {
         while (use) {
-            System.out.println("Please enter your calculation, q to quit");
+            out.println("Please enter your calculation, q to quit, s to switch");
             queryInput();
             handleOperation();
             //System.out.println(pile.toString());
@@ -113,7 +160,10 @@ public class CalcRPLImproved {
                     System.out.println("insuffisant number of elements for operation");
                 }
             }
-            System.out.println(pile.toString());
+            else if (str.equals("s")){
+                changeMode();
+            }
+            out.println(pile.toString());
         }
     }
 }
