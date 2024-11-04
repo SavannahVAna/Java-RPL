@@ -17,15 +17,15 @@ public class FooRPL {//comme demandé la classe main va juste lancer la classe q
                     case "-user=remote":
                         CalcRemote rpi = new CalcRemote();
                         try {
-                            rpi.run(false);
+                            rpi.run(false, true);
                         } catch (Exception e){
                             System.out.println("une erreur s'est produite");
                         }
                         break;
                     case "-user=local":
-                        CalcRPLImproved rp = new CalcRPLImproved(false);
+                        CalcRemote rp = new CalcRemote();
                         try {
-                            rp.run();
+                            rp.run(false, false);
                         } catch (Exception e){
                             System.out.println("une erreur s'est produite");
                         }
@@ -52,7 +52,7 @@ public class FooRPL {//comme demandé la classe main va juste lancer la classe q
                     if(args[1].equals("-log=rec")) {
                         CalcRemote rpi = new CalcRemote();
                         try {
-                            rpi.run(true);
+                            rpi.run(true, true);
                         } catch (Exception e){
                             System.out.println("une erreur s'est produite");
                         }
@@ -68,9 +68,9 @@ public class FooRPL {//comme demandé la classe main va juste lancer la classe q
                 }
                 else if (args[0].equals("-user=local")) {
                     if(args[1].equals("-log=rec")) {
-                        CalcRPLImproved rp1 = new CalcRPLImproved(true);
+                        CalcRemote rpi = new CalcRemote();
                         try {
-                            rp1.run();
+                            rpi.run(true, false);
                         } catch (Exception e){
                             System.out.println("une erreur s'est produite");
                         }

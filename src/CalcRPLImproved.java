@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Arrays;
 import java.util.Scanner;
 //classe de base pour la calculette en solo, supporte la création de logs grace au boolean write passé a la construction (true pour logger)
@@ -112,6 +116,12 @@ public class CalcRPLImproved {
                 else {
                     System.out.println("insuffisant number of elements for operation");
                 }
+            }
+            else if (str.equals("r")){
+                Socket _socket = null; // socket representing connecton to remote machine
+                PrintWriter send = null; // write to this to send data to remote server
+                BufferedReader receive = null;
+                InputStream in = System.in;
             }
         }
     }
