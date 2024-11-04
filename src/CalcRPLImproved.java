@@ -40,7 +40,7 @@ public class CalcRPLImproved {
             System.out.println("Please enter your calculation, q to quit");
             queryInput();
             handleOperation();
-            System.out.println(pile.toString());
+            //System.out.println(pile.toString());
         }
     }
 
@@ -113,6 +113,7 @@ public class CalcRPLImproved {
                     System.out.println("insuffisant number of elements for operation");
                 }
             }
+            System.out.println(pile.toString());
         }
     }
 }

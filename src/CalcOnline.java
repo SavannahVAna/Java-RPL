@@ -42,7 +42,7 @@ public class CalcOnline {
             out.println("Please enter your calculation, q to quit");
             queryInput();
             handleOperation();
-            out.println(pile.toString());
+            //out.println(pile.toString());
         }
     }
 
@@ -112,6 +112,7 @@ public class CalcOnline {
                     System.out.println("insuffisant number of elements for operation");
                 }
             }
+            out.println(pile.toString());
         }
     }
 }
