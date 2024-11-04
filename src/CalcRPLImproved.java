@@ -13,7 +13,10 @@ public class CalcRPLImproved {
     public CalcRPLImproved(boolean write) throws IOException {
         sc = new Scanner(System.in);
         pile = new PileRPL();
-        this.logWriter = new LogWriter("log.txt");
+        if (write) {
+            this.logWriter = new LogWriter("log.txt");
+        }
+
         this.write = write;
     }
 

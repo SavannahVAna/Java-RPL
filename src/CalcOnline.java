@@ -17,7 +17,9 @@ public class CalcOnline {
         sc = new Scanner(in);
         pile = new PileRPL();
         this.out = out;
-        //logWriter = new LogWriter("log.txt");
+        //if (write) {
+        //    this.logWriter = new LogWriter("log.txt");
+        //}
     }
 
     private boolean checkInt(String in) {
@@ -30,7 +32,8 @@ public class CalcOnline {
 
     private void queryInput() throws IOException {
         String in = sc.nextLine();
-        //logWriter.log(in);
+        //if (write){
+        //    logWriter.log(in);}
         input = in.split(" ");
     }
 
