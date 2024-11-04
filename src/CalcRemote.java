@@ -8,9 +8,12 @@ public class CalcRemote {
     PrintWriter _send = null; // write to this to send data to remote server
     BufferedReader _receive = null;
     InputStream in = System.in;
+    LogWriter logWriter;
     public void init(boolean wr) throws IOException {
         int remoteSocketNumber = 12345;
-        LogWriter logWriter = new LogWriter("log.txt");
+        if(wr) {
+            logWriter = new LogWriter("log.txt");
+        }
         try {
             _socket = new Socket("127.0.0.1", remoteSocketNumber);
         } catch (IOException e) {
@@ -42,6 +45,9 @@ public class CalcRemote {
                     _send.println(userInput);
 
                     if ("q".equalsIgnoreCase(userInput.trim())) {
+                        if (wr) {
+                            logWriter.close();
+                        }
                         break;
                     }
                 }

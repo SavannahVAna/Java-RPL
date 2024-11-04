@@ -95,7 +95,8 @@ public class CalcRPLImproved {
             }
             else if (str.equals("q")) {
                 use = false;
-                logWriter.close();
+                if (write){
+                logWriter.close();}
             } else if (str.equals("/")) {
                 if (pile.getObjetLen() >1) {
                     pile.division();
