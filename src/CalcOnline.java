@@ -25,7 +25,7 @@ public class CalcOnline {
     }
 
     private boolean checkVector(String in) {
-        return in.matches("\\d*,\\d*");
+        return in.matches("(\\d+,)+\\d+");
     }
 
     private void queryInput() throws IOException {
@@ -60,24 +60,54 @@ public class CalcOnline {
                 a= Integer.parseInt(str);
                 int[] d = {a};
                 ObjetEmpilable obj = new ObjetEmpilable(d);
-                pile.empile(obj);
+                try {
+                    pile.empile(obj);
+                }catch (Exception e){
+                    System.out.println("fail to empile objet (are they the same size?)");
+                    pile.removeLast();
+                }
             }
             else if (checkVector(str)) {
-                pile.empile(separateVectors(str));
+                try {
+                    pile.empile(separateVectors(str));
+                }catch (Exception e){
+                    System.out.println("fail to empile objet (are they the same size?)");
+                    pile.removeLast();
+                }
             }
             else if (str.equals("+")) {
-                pile.addition();
+                if (pile.getObjetLen() >1) {
+                    pile.addition();
+                }
+                else {
+                    System.out.println("insuffisant number of elements for operation");
+                }
             }
             else if (str.equals("-")) {
-                pile.soustraction();
+                if (pile.getObjetLen() >1) {
+                    pile.soustraction();
+                }
+                else {
+                    System.out.println("insuffisant number of elements for operation");
+                }
             }
             else if (str.equals("q")) {
                 use = false;
             } else if (str.equals("/")) {
-                pile.division();
+                if (pile.getObjetLen() >1) {
+                    pile.division();
+                }
+                else {
+                    System.out.println("insuffisant number of elements for operation");
+                }
             }
             else if (str.equals("*")) {
-                pile.multiplication();
+                if (pile.getObjetLen() >1) {
+                    pile.multiplication();
+                }
+                else {
+                    System.out.println("insuffisant number of elements for operation");
+                }
             }
         }
     }

@@ -1,5 +1,7 @@
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -12,10 +14,11 @@ public class CalcOnlineStatic implements Runnable {
     private boolean use = true;
     private PrintStream out;
     private BufferedReader in;
-
-    public CalcOnlineStatic(BufferedReader in, PrintStream out) throws IOException {
+    private CalcServer server;
+    public CalcOnlineStatic(BufferedReader in, PrintStream out, CalcServer serv) throws IOException {
         this.sc = new Scanner(in);
         this.out = out;
+        this.server = serv;
     }
     public CalcOnlineStatic() {
         // Constructeur vide
@@ -26,7 +29,7 @@ public class CalcOnlineStatic implements Runnable {
     }
 
     private boolean checkVector(String in) {
-        return in.matches("\\d+,\\d+");
+        return in.matches("(\\d+,)+\\d+");
     }
 
     private void queryInput() throws IOException {
@@ -41,10 +44,15 @@ public class CalcOnlineStatic implements Runnable {
                 out.println("Please enter your calculation, q to quit");
                 queryInput();
                 handleOperation();
-                out.println(pile.toString());  // Afficher la pile partagée
+                broadcastPileState();
+                //out.println(pile.toString());  // Afficher la pile partagée
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            synchronized (server.clientOutputs) {
+                server.clientOutputs.remove(out);  // Retirer le flux lors de la déconnexion
+            }
         }
     }
 
@@ -66,34 +74,77 @@ public class CalcOnlineStatic implements Runnable {
                     a = Integer.parseInt(str);
                     int[] d = { a };
                     ObjetEmpilable obj = new ObjetEmpilable(d);
-                    pile.empile(obj);
+                    try {
+                        pile.empile(obj);
+                    }catch (Exception e){
+                        System.out.println("fail to empile objet (are they the same size?)");
+                        pile.removeLast();
+                    }
+
                 } else if (checkVector(str)) {
-                    pile.empile(separateVectors(str));
+                    try {
+                        pile.empile(separateVectors(str));
+                    }catch (Exception e){
+                        System.out.println("fail to empile objet (are they the same size?)");
+                        pile.removeLast();
+                    }
                 } else if (str.equals("+")) {
-                    pile.addition();
+                    if (pile.getObjetLen() >1) {
+                        pile.addition();
+                    }
+                    else {
+                        System.out.println("insuffisant number of elements for operation");
+                    }
                 } else if (str.equals("-")) {
-                    pile.soustraction();
+                    if (pile.getObjetLen() >1) {
+                        pile.soustraction();
+                    }
+                    else {
+                        System.out.println("insuffisant number of elements for operation");
+                    }
                 } else if (str.equals("q")) {
                     use = false;
                 } else if (str.equals("/")) {
-                    pile.division();
+                    if (pile.getObjetLen() >1) {
+                        pile.division();
+                    }
+                    else {
+                        System.out.println("insuffisant number of elements for operation");
+                    }
                 }
                 else if (str.equals("*")) {
-                    pile.multiplication();
+                    if (pile.getObjetLen() >1){
+                        pile.multiplication();
+                    }
+                    else {
+                        System.out.println("insuffisant number of elements for operation");
+                    }
                 }
+
             } finally {
                 pileLock.unlock();  // Libérer le lock après l'opération
             }
         }
     }
 
+    private void broadcastPileState() {
+        synchronized (server.clientOutputs) {  // Synchroniser l'accès à la liste
+            for (PrintStream clientOut : server.clientOutputs) {
+                clientOut.println("Current pile state: " + pile.toString());
+            }
+        }
+    }
+
+
+
     // Classe pour démarrer un serveur multi-utilisateur
     public static class CalcServer {
         private ServerSocket serverSocket;
-
+        private ArrayList<PrintStream> clientOutputs;
         public CalcServer(int port) throws IOException {
             serverSocket = new ServerSocket(port);
             pile = new PileRPL();  // Pile commune à tous les utilisateurs
+            clientOutputs = new ArrayList<>();
         }
 
         public void start() {
@@ -104,9 +155,11 @@ public class CalcOnlineStatic implements Runnable {
                     System.out.println("Client connected");
                     BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                     PrintStream out = new PrintStream(clientSocket.getOutputStream());
-
+                    synchronized (clientOutputs) {  // Protéger l'accès à la liste
+                        clientOutputs.add(out);
+                    }
                     // Lancer un nouveau thread pour chaque client
-                    Thread clientThread = new Thread(new CalcOnlineStatic(in, out));
+                    Thread clientThread = new Thread(new CalcOnlineStatic(in, out, this));
                     clientThread.start();
                 } catch (IOException e) {
                     e.printStackTrace();

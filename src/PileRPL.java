@@ -14,6 +14,10 @@ public class PileRPL {
         dimension = 0;
     }
 
+    public int getObjetLen(){
+        return objets.size();
+    }
+
     public void empile(ObjetEmpilable objet) throws Exception {
         objets.add(objet);
         pointeurHautDePile++;
@@ -47,6 +51,10 @@ public class PileRPL {
             System.out.println("ça devrait pas arriver");
         }
 
+    }
+
+    public void removeLast(){
+        objets.removeLast();
     }
 
     public void soustraction(){
