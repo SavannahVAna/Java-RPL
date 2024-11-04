@@ -5,10 +5,11 @@ import java.util.Scanner;
 //on peut egalement logger avec cett classe
 public class CalcRemote {
     Socket _socket = null; // socket representing connecton to remote machine
-    PrintWriter _send = null; // write to this to send data to remote server
-    BufferedReader _receive = null;
+    PrintWriter send = null; // write to this to send data to remote server
+    BufferedReader receive = null;
     InputStream in = System.in;
     LogWriter logWriter;
+    Thread tread;
     public void init(boolean wr) throws IOException {
         int remoteSocketNumber = 12345;
         if(wr) {
@@ -21,33 +22,36 @@ public class CalcRemote {
         }
         if(_socket !=null) {
             try {
-                _send = new PrintWriter(_socket.getOutputStream(), true);
-                _receive = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
-                new Thread(() -> {
+                send = new PrintWriter(_socket.getOutputStream(), true);
+                receive = new BufferedReader(new InputStreamReader(_socket.getInputStream()));
+                tread = new Thread(() -> {
                     try {
                         String serverResponse;
-                        while ((serverResponse = _receive.readLine()) != null) {
+                        while ((serverResponse = receive.readLine()) != null) {
                             System.out.println(serverResponse);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }).start();
+                });
+                tread.start();
 
                 // Read messages from the console and send to the server
                 Scanner scanner = new Scanner(in);
                 String userInput;
-                while (true) {
+                while (! tread.isInterrupted()) {
                     userInput = scanner.nextLine();
                     if(wr){
                         logWriter.log(userInput);
                     }
-                    _send.println(userInput);
+                    send.println(userInput);
 
                     if ("q".equalsIgnoreCase(userInput.trim())) {
                         if (wr) {
                             logWriter.close();
                         }
+                        tread.interrupt();
+                        System.exit(0);
                         break;
                     }
                 }
