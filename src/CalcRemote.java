@@ -40,6 +40,10 @@ public class CalcRemote {
                         logWriter.log(userInput);
                     }
                     _send.println(userInput);
+
+                    if ("q".equalsIgnoreCase(userInput.trim())) {
+                        break;
+                    }
                 }
 
             } catch (IOException e) {
